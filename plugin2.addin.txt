@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+ <AddIn Type="Command">
+       <Name>Material Information</Name>
+       <FullClassName>Lab1PlaceGroup.Class1</FullClassName>
+       <Text>Material Information</Text>
+       <Description>Returns Material Information of a face</Description>
+       <VisibilityMode>AlwaysVisible</VisibilityMode>
+       <Assembly>C:\Users\bhatt\source\repos\plugin2\plugin2\bin\Debug\plugin2.dll</Assembly>
+       <AddInId>502fe383-2648-4e98-adf8-5e6047f9dc34</AddInId>
+    <VendorId>ADSK</VendorId>
+    <VendorDescription>Autodesk, Inc, www.autodesk.com</VendorDescription>
+ </AddIn>
+</RevitAddIns>
