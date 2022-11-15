@@ -9,6 +9,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.DB.Architecture;
+using System.Xml.Linq;
+//Task 2
 namespace Lab1PlaceGroup
 {
     [Transaction(TransactionMode.Manual)]
@@ -22,8 +24,50 @@ namespace Lab1PlaceGroup
             Document doc = uiapp.ActiveUIDocument.Document;
 
             //Define a reference Object to accept the pick result
-            Reference pickedref = null;
+            Reference myRef = null;
 
+            Selection sel = uiapp.ActiveUIDocument.Selection;
+
+            myRef = sel.PickObject(ObjectType.Face, "Select a face");
+            Element e = doc.GetElement(myRef);
+            //Getting the face
+            Face face = e.GetGeometryObjectFromReference(myRef) as Face;
+            
+            
+            
+            string r="",g=" ",b=" ",n=" ";
+
+             List<Element> materials = new FilteredElementCollector(doc).OfClass(typeof(Material)).ToList();
+
+            //searching for a match of face material id in all the material ids. 
+            try
+            {
+                foreach (Material material in materials)
+                {
+
+                    if (face.MaterialElementId == material.Id)
+                    {
+                        r = material.Color.Red.ToString();
+                        g = material.Color.Green.ToString();
+                        b = material.Color.Blue.ToString();
+                        n = material.Name;
+
+                    }
+
+
+
+                }
+                TaskDialog.Show("Material information", "Material Name: " + n + ", RGB" + r + "," + g + "," + b);
+            }
+            catch(Exception ex)
+            {
+                TaskDialog.Show("Exception Caught", "Exception Caught!: " + ex.Message);
+            }
+            
+            /*
+
+            //Define a reference Object to accept the pick result
+            Reference pickedref = null;
             //Pick a group
             Selection sel = uiapp.ActiveUIDocument.Selection;
             pickedref = sel.PickObject(ObjectType.Element, "Please select a group");
@@ -38,7 +82,7 @@ namespace Lab1PlaceGroup
             trans.Start("Lab");
             doc.Create.PlaceGroup(point, group.GroupType);
             trans.Commit();
-
+            */
             return Result.Succeeded;
         }
     }
